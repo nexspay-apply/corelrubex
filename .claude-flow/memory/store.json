@@ -1,0 +1,239 @@
+{
+  "entries": {
+    "cmd-1795058478054": {
+      "key": "cmd-1795058478054",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && for f in index.html apply.html; do node -e \\\"const s=require('fs').readFileSync('$f','utf8');const m=[...s.matchAll(/<script>([\\\\s\\\\S]*?)<\\\\/script>/g)];m.forEach(x=>new Function(x[1]));console.log('$f ok',m.length)\\\"; done\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T03:21:18.054Z",
+      "lastAccessed": "2026-11-19T03:21:18.054Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T03:21:18.054Z"
+    },
+    "cmd-1795058762299": {
+      "key": "cmd-1795058762299",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && ls && mkdir -p public/js supabase && mv index.html apply.html public/ && node -e \\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T03:26:02.299Z",
+      "lastAccessed": "2026-11-19T03:26:02.299Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T03:26:02.299Z"
+    },
+    "cmd-1795058825461": {
+      "key": "cmd-1795058825461",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && curl -sI https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js | head -1; curl -sI https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js | head -1; for f in public/js/*.js; do node --check \\\"$f\\\" && echo \\\"$f ok\\\"; done\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T03:27:05.461Z",
+      "lastAccessed": "2026-11-19T03:27:05.461Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T03:27:05.461Z"
+    },
+    "cmd-1795062832778": {
+      "key": "cmd-1795062832778",
+      "value": "{\"command\":\"for u in https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js; do echo \\\"$(curl -s -o /dev/null -w '%{http_code}' $u) $u\\\"; done\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T04:33:52.778Z",
+      "lastAccessed": "2026-11-19T04:33:52.778Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T04:33:52.778Z"
+    },
+    "cmd-1795062961404": {
+      "key": "cmd-1795062961404",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && rm firebase.json .firebaserc && node --check public/js/admin.js && node --check public/js/apply.js && echo ok && ls -a . public public/js supabase\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T04:36:01.404Z",
+      "lastAccessed": "2026-11-19T04:36:01.404Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T04:36:01.404Z"
+    },
+    "cmd-1795075466428": {
+      "key": "cmd-1795075466428",
+      "value": "{\"command\":\"node -v; npm -v; cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && ls -a\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:04:26.428Z",
+      "lastAccessed": "2026-11-19T08:04:26.428Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:04:26.428Z"
+    },
+    "cmd-1795075516647": {
+      "key": "cmd-1795075516647",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && mkdir -p legacy-static && mv public legacy-static/public && mv netlify.toml legacy-static/ && mkdir -p public src/pages src/components src/data src/lib && node -e \\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:05:16.647Z",
+      "lastAccessed": "2026-11-19T08:05:16.647Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:05:16.647Z"
+    },
+    "cmd-1795075550641": {
+      "key": "cmd-1795075550641",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && npm install --no-audit --no-fund 2>&1 | tail -5\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:05:50.641Z",
+      "lastAccessed": "2026-11-19T08:05:50.641Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:05:50.641Z"
+    },
+    "cmd-1795075846751": {
+      "key": "cmd-1795075846751",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing/legacy-static/public\\\" && ls -la apply.html && grep -n -i \\\"label class=\\\\\\\"f\\\\|<option\\\\|legend\\\\|kicker\\\\|<h2>\\\" apply.html | grep -v \\\"option>\\\" | head -60\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:10:46.751Z",
+      "lastAccessed": "2026-11-19T08:10:46.751Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:10:46.751Z"
+    },
+    "cmd-1795075933770": {
+      "key": "cmd-1795075933770",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && node -e \\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:12:13.770Z",
+      "lastAccessed": "2026-11-19T08:12:13.770Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:12:13.770Z"
+    },
+    "cmd-1795076013827": {
+      "key": "cmd-1795076013827",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing/supabase\\\" && mv schema.sql 001_schema.sql && mv admin.sql 002_admin.sql && sed -i 's/schema.sql run karne ke BAAD/001_schema.sql run karne ke BAAD/' 002_admin.sql && sed -i 's/AFTER schema.sql and admin.sql/AFTER 001_schema.sql and 002_admin.sql/' 003_more_cards.sql && ls && cd .. && npm run build 2>&1 | tail -20\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:13:33.827Z",
+      "lastAccessed": "2026-11-19T08:13:33.827Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:13:33.827Z"
+    },
+    "cmd-1795076023899": {
+      "key": "cmd-1795076023899",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && (npx vite preview --port 4173 --strictPort > /dev/null 2>&1 &) ; for p in \\\"/c/Program Files/Google/Chrome/Application/chrome.exe\\\" \\\"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe\\\" \\\"/c/Program Files/Microsoft/Edge/Application/msedge.exe\\\"; do [ -f \\\"$p\\\" ] && echo \\\"$p\\\"; done; sleep 4; curl -s -o /dev/null -w \\\"%{http_code}\\\\n\\\" http://localhost:4173/\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:13:43.899Z",
+      "lastAccessed": "2026-11-19T08:13:43.899Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:13:43.899Z"
+    },
+    "cmd-1795076040811": {
+      "key": "cmd-1795076040811",
+      "value": "{\"command\":\"S=\\\"C:/Users/CHANDR~1/AppData/Local/Temp/claude/4647feb9c2aadf05/e41f3cd9-cce3-40a6-8e7c-ca4d17f34452/scratchpad\\\"; C=\\\"/c/Program Files/Google/Chrome/Application/chrome.exe\\\"; \\\"$C\\\" --headless=new --disable-gpu --hide-scrollbars --window-size=1440,2600 --virtual-time-budget=4000 --screenshot=\\\"$S/home.png\\\" http://localhost:4173/ 2>/dev/null; \\\"$C\\\" --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1100 --virtual-time-budget=3000 --screenshot=\\\"$S/apply.png\\\" http://localhost:4173/apply 2>/dev/null; \\\"$C\\\" --headless=new --disable-gpu --hide-scrollbars --window-size=390,2400 --virtual-time-budget=3000 --screenshot=\\\"$S/mobile.png\\\" http://localhost:4173/ 2>/dev/null; ls \\\"$S\\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:14:00.811Z",
+      "lastAccessed": "2026-11-19T08:14:00.811Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:14:00.811Z"
+    },
+    "cmd-1795076080049": {
+      "key": "cmd-1795076080049",
+      "value": "{\"command\":\"S=\\\"C:/Users/CHANDR~1/AppData/Local/Temp/claude/4647feb9c2aadf05/e41f3cd9-cce3-40a6-8e7c-ca4d17f34452/scratchpad\\\"; cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && npm run build >/dev/null 2>&1; cat > dist/_m.html <<'EOF'\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:14:40.049Z",
+      "lastAccessed": "2026-11-19T08:14:40.049Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:14:40.049Z"
+    },
+    "cmd-1795076101832": {
+      "key": "cmd-1795076101832",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && cat >> src/styles.css <<'EOF'\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-19T08:15:01.832Z",
+      "lastAccessed": "2026-11-19T08:15:01.832Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-19T08:15:01.832Z"
+    },
+    "cmd-1795535463613": {
+      "key": "cmd-1795535463613",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing\\\" && ls -la && find . -path ./node_modules -prune -o -iname \\\"*home_page*\\\" -print -o -iname \\\"*index*page*\\\" -print 2>/dev/null | head\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T15:51:03.613Z",
+      "lastAccessed": "2026-11-24T15:51:03.613Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T15:51:03.613Z"
+    },
+    "cmd-1795535469683": {
+      "key": "cmd-1795535469683",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing/index page\\\" && find . -type f | head -50 && wc -c $(find . -type f -name \\\"*.html\\\") 2>/dev/null\",\"exitCode\":1,\"success\":false}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T15:51:09.683Z",
+      "lastAccessed": "2026-11-24T15:51:09.683Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T15:51:09.683Z"
+    },
+    "cmd-1795535477343": {
+      "key": "cmd-1795535477343",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing/index page\\\" && find . -type f \\\\( -name \\\"*.html\\\" -o -name \\\"*.htm\\\" \\\\) -exec ls -la {} \\\\; ; find . -type f | wc -l; ls -la\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T15:51:17.343Z",
+      "lastAccessed": "2026-11-24T15:51:17.343Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T15:51:17.343Z"
+    },
+    "cmd-1795535483902": {
+      "key": "cmd-1795535483902",
+      "value": "{\"command\":\"cd \\\"/c/Users/chandra kumari/Downloads/landing/index page\\\" && head -c 3000 \\\"home page.html\\\"; echo; echo ----; grep -o -i -E \\\"<title>[^<]*</title>|jupiter|federal bank|csb bank|edge|canonical[^>]*>|og:site_name[^>]*>|og:url[^>]*>\\\" \\\"home page.html\\\" | sort | uniq -c | sort -rn | head -30\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T15:51:23.902Z",
+      "lastAccessed": "2026-11-24T15:51:23.902Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T15:51:23.902Z"
+    },
+    "cmd-1795541778811": {
+      "key": "cmd-1795541778811",
+      "value": "{\"command\":\"rtk ls -la\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:18.811Z",
+      "lastAccessed": "2026-11-24T17:36:18.811Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:18.811Z"
+    },
+    "cmd-1795541784479": {
+      "key": "cmd-1795541784479",
+      "value": "{\"command\":\"rtk ls -la \\\"index page\\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:24.479Z",
+      "lastAccessed": "2026-11-24T17:36:24.479Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:24.479Z"
+    },
+    "cmd-1795541793590": {
+      "key": "cmd-1795541793590",
+      "value": "{\"command\":\"rtk ls -la \\\"index page/assets\\\" && rtk ls -la \\\"index page/content\\\" && rtk ls -la \\\"index page/public\\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:33.590Z",
+      "lastAccessed": "2026-11-24T17:36:33.590Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:33.590Z"
+    },
+    "cmd-1795541800459": {
+      "key": "cmd-1795541800459",
+      "value": "{\"command\":\"rtk ls -la \\\"index page/content\\\" && rtk ls -la \\\"index page/public\\\"\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:40.459Z",
+      "lastAccessed": "2026-11-24T17:36:40.459Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:40.459Z"
+    },
+    "cmd-1795541813809": {
+      "key": "cmd-1795541813809",
+      "value": "{\"command\":\"rtk ls -la src && rtk ls -la supabase\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:53.809Z",
+      "lastAccessed": "2026-11-24T17:36:53.809Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:53.809Z"
+    },
+    "cmd-1795541819758": {
+      "key": "cmd-1795541819758",
+      "value": "{\"command\":\"rtk ls -la src/components && rtk ls -la src/pages && rtk ls -la src/lib\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:36:59.758Z",
+      "lastAccessed": "2026-11-24T17:36:59.758Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:36:59.758Z"
+    },
+    "cmd-1795541835547": {
+      "key": "cmd-1795541835547",
+      "value": "{\"command\":\"rtk ls -la src/data/\",\"exitCode\":0,\"success\":true}",
+      "namespace": "commands",
+      "storedAt": "2026-11-24T17:37:15.547Z",
+      "lastAccessed": "2026-11-24T17:37:15.547Z",
+      "accessCount": 0,
+      "expiresAt": "2026-12-24T17:37:15.547Z"
+    }
+  },
+  "version": "3.0.0"
+}

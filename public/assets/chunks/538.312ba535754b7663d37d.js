@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkkorima=globalThis.webpackChunkkorima||[]).push([[538],{5538(e,t,c){c.d(t,{default:()=>s});var o=c(2891);const s=class extends o.xI{connect(){window.location.href.includes("utm_source=Google_Web&utm_medium=cpc")&&(this.element.href="https://jptr.onelink.me/TOMp/9cd9ebb8")}}}}]);

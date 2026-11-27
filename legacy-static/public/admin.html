@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cardwise Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0a1220;--night-2:#111c2f;--ink:#0f1a2b;--mute:#5d6b80;--line:#e5e8ee;--paper:#f5f4f0;--gold:#d6a24e;--gold-2:#f1d398;--emerald:#0f766e;--emerald-2:#14b8a6;--bad:#b4412f}
+*{box-sizing:border-box}
+body{margin:0;font:14.5px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+.serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hide{display:none!important}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-2),var(--gold));color:var(--night);font:italic 21px "Instrument Serif"}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:11px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font-weight:700;font-size:13.5px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{border-color:#b9c3d0}
+.btn-dark{background:var(--night);border-color:var(--night);color:#fff}.btn-dark:hover{background:#1a2740}
+.btn-gold{background:linear-gradient(135deg,var(--gold-2),var(--gold));border-color:transparent;color:#1a1205}
+.btn-red{color:var(--bad)}.btn-red:hover{border-color:var(--bad);background:#fdf3f1}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+
+/* login */
+#login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(600px 400px at 80% 10%,#14b8a62a,transparent 60%),radial-gradient(600px 400px at 10% 90%,#d6a24e22,transparent 60%),var(--night)}
+.lbox{width:100%;max-width:400px;background:#fff;border-radius:24px;padding:38px 34px;box-shadow:0 40px 100px -30px #000}
+.lbox h1{font-size:28px;margin:26px 0 6px}
+.lbox p{color:var(--mute);margin:0 0 24px}
+.fl{display:block;font-weight:700;font-size:13px;margin-bottom:14px}
+.fl input{display:block;width:100%;height:50px;margin-top:6px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;background:#fbfaf8}
+.fl input:focus{outline:0;border-color:var(--emerald);box-shadow:0 0 0 4px #0f766e1a}
+.lbox .btn{width:100%;justify-content:center;height:50px;font-size:15px;margin-top:6px}
+.lerr{color:var(--bad);font-weight:600;font-size:13px;min-height:1.2em;margin:12px 0 0}
+
+/* app */
+.top{position:sticky;top:0;z-index:20;background:var(--night);color:#fff}
+.top .in{display:flex;align-items:center;gap:16px;height:64px;padding:0 24px;max-width:1500px;margin:auto}
+.live{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#9fadc3;padding:6px 12px;border-radius:999px;background:#ffffff0d;border:1px solid #ffffff1a;margin-left:8px}
+.live i{width:8px;height:8px;border-radius:50%;background:#7d8aa0}
+.live.on i{background:#22c55e;box-shadow:0 0 0 0 #22c55e88;animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px #22c55e00}100%{box-shadow:0 0 0 0 #22c55e00}}
+.who{margin-left:auto;font-size:13px;color:#9fadc3}
+.top .btn{background:#ffffff10;border-color:#ffffff22;color:#fff}
+.wrap{max-width:1500px;margin:auto;padding:26px 24px 60px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.stat span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.stat b{display:block;font:italic 40px/1.1 "Instrument Serif";margin-top:4px}
+.stat:first-child{background:var(--night);color:#fff;border-color:var(--night)}
+.stat:first-child span{color:#9fadc3}.stat:first-child b{color:var(--gold-2)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px;border-bottom:1px solid var(--line)}
+.bar input,.bar select{height:40px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;background:#fbfaf8;font-size:13.5px}
+.bar input[type=search]{flex:1;min-width:220px}
+.bar .sp{flex:1}
+.selinfo{font-size:13px;font-weight:600;color:var(--emerald)}
+.tw{overflow:auto;max-height:calc(100vh - 330px);min-height:260px}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:#f7f6f2;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);z-index:1}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:#faf9f5}
+tbody tr.sel{background:#effaf7}
+tbody tr.flash{animation:flash 2.2s}
+@keyframes flash{0%{background:#fff3d6}100%{background:transparent}}
+td.ref{font-weight:700;letter-spacing:.04em}
+td small{display:block;color:var(--mute);font-size:12px}
+input[type=checkbox]{width:17px;height:17px;accent-color:var(--emerald);cursor:pointer}
+.st{height:32px;border-radius:999px;border:1.5px solid var(--line);padding:0 10px;font-weight:700;font-size:12.5px;cursor:pointer}
+.st.new{background:#fff6e5;border-color:#f1d9a6;color:#7a5410}
+.st.contacted{background:#e8f1fe;border-color:#bcd4f7;color:#1e4f9a}
+.st.applied{background:#e2f4ea;border-color:#b7e0c8;color:#1b7a4b}
+.st.closed{background:#f1f1f1;color:#666}
+.link{background:none;border:0;color:var(--emerald);font-weight:700;cursor:pointer;padding:4px}
+.empty{padding:60px 20px;text-align:center;color:var(--mute)}
+.foot{display:flex;justify-content:space-between;padding:12px 16px;font-size:12.5px;color:var(--mute);border-top:1px solid var(--line)}
+
+/* drawer */
+dialog{border:0;padding:0;border-radius:22px;width:min(720px,calc(100% - 24px));box-shadow:0 40px 100px #0008}
+dialog::backdrop{background:#0a1220b3;backdrop-filter:blur(3px)}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:var(--night);color:#fff}
+.dh h3{font-size:20px}.dh small{color:#9fadc3;display:block}
+.dh button{background:#ffffff14;border:0;color:#fff;width:36px;height:36px;border-radius:10px;font-size:18px;cursor:pointer}
+.db{padding:20px 24px;max-height:65vh;overflow:auto}
+.db dl{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 0 16px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.db dl div{padding:10px 14px;border-bottom:1px solid var(--line)}
+.db dt{font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.db dd{margin:0;font-weight:600;word-break:break-word}
+.db textarea{width:100%;min-height:90px;border:1.5px solid var(--line);border-radius:12px;padding:12px;resize:vertical}
+.df{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid var(--line)}
+.toast{position:fixed;right:20px;bottom:20px;z-index:99;background:var(--night);color:#fff;padding:14px 18px;border-radius:14px;box-shadow:0 20px 50px -10px #000a;font-weight:600;transform:translateY(120%);opacity:0;transition:all .35s}
+.toast.on{transform:none;opacity:1}
+@media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.who{display:none}.tw{max-height:none}}
+@media(max-width:560px){.wrap{padding:16px 12px}.top .in{padding:0 12px}.bar .sp{display:none}.db dl{grid-template-columns:1fr}.live span{display:none}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <form class="lbox" id="lform" autocomplete="on">
+    <div class="brand"><span class="mark">C</span>Cardwise</div>
+    <h1>Admin <span class="serif">sign in.</span></h1>
+    <p>Enquiries dashboard. Authorised staff only.</p>
+    <label class="fl">User ID<input id="luser" autocomplete="username" required placeholder="admin"></label>
+    <label class="fl">Password<input id="lpass" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+    <button class="btn btn-dark" id="lbtn" type="submit">Sign in</button>
+    <p class="lerr" id="lerr" role="alert"></p>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" class="hide">
+  <header class="top"><div class="in">
+    <div class="brand"><span class="mark">C</span>Cardwise <span style="font-weight:500;color:#9fadc3;font-size:14px">Admin</span></div>
+    <span class="live" id="live"><i></i><span id="liveTxt">Connecting…</span></span>
+    <span class="who" id="who"></span>
+    <button class="btn" id="logout">Sign out</button>
+  </div></header>
+
+  <main class="wrap">
+    <div class="stats">
+      <div class="stat"><span>Total enquiries</span><b id="sTotal">0</b></div>
+      <div class="stat"><span>Today</span><b id="sToday">0</b></div>
+      <div class="stat"><span>New (not contacted)</span><b id="sNew">0</b></div>
+      <div class="stat"><span>Last 7 days</span><b id="sWeek">0</b></div>
+    </div>
+
+    <div class="panel">
+      <div class="bar">
+        <input type="search" id="q" placeholder="Search name, mobile, email, ref, bank, city…">
+        <select id="fStatus"><option value="">All status</option><option value="new">New</option><option value="contacted">Contacted</option><option value="applied">Applied</option><option value="closed">Closed</option></select>
+        <select id="fWant"><option value="">All interests</option><option value="rubyx">Rubyx</option><option value="coral">Coral</option><option value="rupay">RuPay</option><option value="upgrade">Upgrade</option><option value="unsure">Not sure</option></select>
+        <input type="date" id="fFrom" title="From date"><input type="date" id="fTo" title="To date">
+        <span class="sp"></span>
+        <span class="selinfo" id="selInfo"></span>
+        <button class="btn" id="xls"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>Excel</button>
+        <button class="btn" id="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>PDF</button>
+        <button class="btn btn-red" id="del" disabled>Delete</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr>
+            <th><input type="checkbox" id="all" aria-label="Select all"></th>
+            <th>Received</th><th>Ref</th><th>Applicant</th><th>Mobile</th><th>City</th><th>Current card</th><th>Last 4</th><th>Interest</th><th>Income</th><th>Call time</th><th>Status</th><th></th>
+          </tr></thead>
+          <tbody id="tb"></tbody>
+        </table>
+        <div class="empty hide" id="empty">No enquiries match these filters.</div>
+      </div>
+      <div class="foot"><span id="count"></span><span id="sync"></span></div>
+    </div>
+  </main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dT">
+  <div class="dh"><div><h3 id="dT"></h3><small id="dSub"></small></div><button type="button" id="dX" aria-label="Close">✕</button></div>
+  <div class="db"><div id="dBody"></div><label class="fl" style="margin:0">Admin notes<textarea id="dNotes" maxlength="2000" placeholder="Call notes, follow-up date…"></textarea></label></div>
+  <div class="df"><button class="btn" type="button" id="dCancel">Close</button><button class="btn btn-dark" type="button" id="dSave">Save notes</button></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

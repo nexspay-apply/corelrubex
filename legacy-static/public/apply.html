@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply Credit Card | Cardwise</title>
+<meta name="description" content="Cardwise enquiry form. Open only to primary holders of an active credit card.">
+<meta name="theme-color" content="#0a1220">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0a1220;--night-2:#111c2f;--ink:#0f1a2b;--mute:#5d6b80;--line:#e3e7ee;--paper:#f6f4ef;--gold:#d6a24e;--gold-2:#f1d398;--emerald:#0f766e;--emerald-2:#14b8a6;--bad:#b4412f;--warn-bg:#fff6e5}
+*{box-sizing:border-box}
+body{margin:0;font:15.5px/1.6 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.1;letter-spacing:-.03em;font-weight:800}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-style:italic;letter-spacing:0}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.layout{display:grid;grid-template-columns:440px 1fr;min-height:100vh}
+
+/* side panel */
+.side{position:sticky;top:0;height:100vh;background:var(--night);color:#fff;padding:36px 40px;display:flex;flex-direction:column;overflow:hidden;isolation:isolate}
+.side:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(500px 400px at 100% 0%,#14b8a62a,transparent 60%),radial-gradient(500px 400px at 0% 100%,#d6a24e1f,transparent 60%)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px}
+.mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-2),var(--gold));color:var(--night);font:italic 22px "Instrument Serif"}
+.back{font-size:13px;color:#9fadc3;margin-left:auto}.back:hover{color:#fff}
+.top{display:flex;align-items:center}
+.side h1{font-size:34px;margin:44px 0 10px}
+.side h1 .serif{color:var(--gold-2)}
+.side>p{color:#9fadc3;margin:0 0 30px;font-size:14.5px}
+.pv{width:100%;max-width:360px;aspect-ratio:1.586;border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(140deg,#1b2436,#2c3850 50%,#141b29);border:1px solid #ffffff22;box-shadow:0 30px 60px -20px #000c,inset 0 1px 0 #ffffff30;position:relative;overflow:hidden;transition:background .5s}
+.pv.on{background:linear-gradient(140deg,#0c3b3a,#127067 50%,#062423)}
+.pv:after{content:"";position:absolute;inset:-50%;background:linear-gradient(115deg,transparent 42%,#ffffff22 50%,transparent 58%);animation:shine 6s infinite}
+@keyframes shine{0%,55%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
+.pv>div{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;gap:10px}
+.pv .bk{font-weight:700;font-size:14px;max-width:65%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv .nt{font-weight:800;font-style:italic;font-size:14px}
+.chip{width:42px;height:31px;border-radius:7px;background:linear-gradient(135deg,#c9a45c,#f7e3ad 45%,#b48a3e);position:relative;z-index:1}
+.pv .num{font:600 19px/1 "Plus Jakarta Sans";letter-spacing:.16em}
+.pv .nm{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv .vr{font:italic 17px "Instrument Serif";opacity:.9;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.rail{list-style:none;padding:0;margin:36px 0 0;display:grid;gap:4px}
+.rail li{display:flex;align-items:center;gap:14px;padding:9px 0;color:#7d8aa0;font-size:14px;font-weight:600;transition:color .3s}
+.rail li i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #ffffff25;font-style:normal;font-size:12px;transition:all .3s}
+.rail li.cur{color:#fff}.rail li.cur i{border-color:var(--gold);color:var(--gold-2);box-shadow:0 0 0 4px #d6a24e22}
+.rail li.done{color:#c6cfdd}.rail li.done i{background:var(--emerald-2);border-color:var(--emerald-2);color:#04201d}
+.safe{margin-top:auto;padding:16px 18px;border-radius:16px;background:#ffffff08;border:1px solid #ffffff14;font-size:13px;color:#9fadc3}
+.safe b{color:#fff;display:block;margin-bottom:2px}
+
+/* main */
+main{padding:56px clamp(20px,5vw,80px);display:flex;justify-content:center}
+.panel{width:100%;max-width:760px}
+.mobile-bar{display:none}
+.progress{height:6px;border-radius:99px;background:#e6e1d6;overflow:hidden;margin-bottom:34px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--emerald),var(--emerald-2));border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.card{background:#fff;border-radius:28px;padding:44px;box-shadow:0 40px 90px -50px #0a122066,0 1px 0 #fff inset;border:1px solid #ece8df}
+.step{display:none}
+.step.on{display:block;animation:in .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald)}
+.step h2{font-size:clamp(26px,3vw,34px);margin:8px 0 8px}
+.sub{color:var(--mute);margin:0 0 30px}
+
+/* yes/no questions */
+.q{border:0;padding:0;margin:0 0 22px}
+.q legend{font-weight:700;font-size:16px;margin-bottom:12px;padding:0;display:flex;gap:12px}
+.q legend span{flex:none;width:26px;height:26px;border-radius:8px;background:#f2efe8;display:grid;place-items:center;font-size:12.5px;color:var(--mute)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{position:relative;display:flex;align-items:center;gap:14px;border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #c7cdd7;transition:all .2s}
+.opt b{display:block;font-size:15px}
+.opt small{display:block;color:var(--mute);font-size:12.5px;line-height:1.4}
+.opt:hover{border-color:#a8c5bf}
+.opt:has(input:checked){border-color:var(--emerald);background:#f0faf8;box-shadow:0 0 0 4px #0f766e14}
+.opt:has(input:checked) .dot{border-color:var(--emerald);background:radial-gradient(circle,var(--emerald) 45%,transparent 50%)}
+.opt.no:has(input:checked){border-color:var(--bad);background:#fdf3f1;box-shadow:0 0 0 4px #b4412f12}
+.opt.no:has(input:checked) .dot{border-color:var(--bad);background:radial-gradient(circle,var(--bad) 45%,transparent 50%)}
+.opt:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:2px}
+
+/* fields */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 18px}
+.f{display:block;font-size:13.5px;font-weight:700;color:#2a3548}
+.f.full{grid-column:1/-1}
+.f input,.f select{width:100%;height:52px;margin-top:7px;border:1.5px solid var(--line);border-radius:13px;padding:0 15px;font:500 15px "Plus Jakarta Sans";color:var(--ink);background:#fcfbf9;transition:border-color .2s,box-shadow .2s,background .2s;appearance:none}
+.f select{background:#fcfbf9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235d6b80' stroke-width='2.4'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 14px center/16px no-repeat;padding-right:40px}
+.f input:hover,.f select:hover{border-color:#bfcad6}
+.f input:focus,.f select:focus{outline:0;border-color:var(--emerald);background-color:#fff;box-shadow:0 0 0 4px #0f766e1a}
+.f select:disabled{opacity:.55;cursor:not-allowed}
+.f .hint{display:block;font-weight:500;font-size:12.5px;color:var(--mute);margin-top:6px;line-height:1.45}
+.f .em{display:none;color:var(--bad);font-weight:600;font-size:12.5px;margin-top:6px}
+.f.err input,.f.err select{border-color:var(--bad);background-color:#fffafa}
+.f.err .em{display:block}.f.err .hint{display:none}
+.count{float:right;font-weight:600;color:var(--emerald);font-size:12px}
+.warn{grid-column:1/-1;display:none;background:var(--warn-bg);border:1px solid #f1d9a6;border-radius:14px;padding:12px 16px;font-size:13.5px;color:#6b4a0c}
+.warn.show{display:block}
+.inline-yn{grid-column:1/-1}
+.inline-yn .yn{grid-template-columns:repeat(2,minmax(0,220px))}
+.inline-yn .opt{padding:12px 16px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:9px}
+.chips label{position:relative;cursor:pointer}
+.chips input{position:absolute;opacity:0}
+.chips span{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);font-weight:600;font-size:14px;background:#fcfbf9;transition:all .2s}
+.chips input:checked+span{background:var(--night);border-color:var(--night);color:#fff}
+.chips input:checked+span:before{content:"✓";color:var(--gold-2)}
+.chips input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+
+/* review */
+.review{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:22px}
+.review h4{margin:0;padding:12px 18px;background:#f7f5f0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between}
+.review h4 button{background:none;border:0;color:var(--emerald);font:700 12px "Plus Jakarta Sans";cursor:pointer;letter-spacing:.06em}
+.review dl{margin:0;display:grid;grid-template-columns:1fr 1fr}
+.review dl div{padding:12px 18px;border-top:1px solid var(--line)}
+.review dt{font-size:12px;color:var(--mute)}
+.review dd{margin:0;font-weight:600;word-break:break-word}
+.chk{display:flex;gap:12px;font-size:14px;color:#3b4658;margin:14px 0;cursor:pointer;line-height:1.5}
+.chk input{flex:none;width:20px;height:20px;margin-top:1px;accent-color:var(--emerald)}
+.demo{font-size:12.5px;color:var(--mute);background:#f7f5f0;border-radius:12px;padding:10px 14px;margin:18px 0 0}
+
+/* nav buttons */
+.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;border-radius:999px;font:700 15px "Plus Jakarta Sans";border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,opacity .2s}
+.btn-main{background:var(--night);color:#fff;box-shadow:0 14px 30px -14px #0a1220aa}
+.btn-main:hover{transform:translateY(-2px);background:#18253c}
+.btn-main[disabled]{opacity:.35;cursor:not-allowed;transform:none}
+.btn-gold{background:linear-gradient(135deg,var(--gold-2),var(--gold) 55%,#b9832f);color:#1a1205;box-shadow:0 12px 30px -12px #d6a24ecc}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--mute);padding-left:6px}
+.btn-ghost:hover{color:var(--ink)}
+.fm{color:var(--bad);font-size:13.5px;font-weight:600;margin:12px 0 0;min-height:1em}
+
+/* states */
+.state{display:none;text-align:center;padding:30px 10px}
+.state.on{display:block;animation:in .5s}
+.state .ic{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;margin:0 auto 22px;font-size:34px}
+.state.ok .ic{background:#e2f4ea;color:#1b7a4b;box-shadow:0 0 0 10px #e2f4ea66}
+.state.lock .ic{background:#fbe9e5;color:var(--bad);box-shadow:0 0 0 10px #fbe9e566}
+.state h2{font-size:32px;margin-bottom:12px}
+.state p{color:var(--mute);max-width:48ch;margin:0 auto 14px}
+.ref{display:inline-block;font:700 15px "Plus Jakarta Sans";letter-spacing:.1em;background:#f7f5f0;border:1px dashed #d8d1c2;border-radius:12px;padding:10px 18px;margin:6px 0 24px}
+.state ul{text-align:left;max-width:420px;margin:0 auto 26px;padding:0;list-style:none}
+.state li{padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:#3b4658}
+.state li:before{content:"→ ";color:var(--emerald);font-weight:800}
+
+dialog{border:0;border-radius:24px;padding:36px;max-width:440px;width:calc(100% - 32px);text-align:center;box-shadow:0 40px 100px #0008}
+dialog::backdrop{background:#0a1220cc;backdrop-filter:blur(4px)}
+dialog .ic{width:58px;height:58px;border-radius:50%;background:#fbe9e5;color:var(--bad);display:grid;place-items:center;font:800 26px "Plus Jakarta Sans";margin:0 auto 16px}
+dialog h3{font-size:24px;margin-bottom:10px}
+dialog p{color:var(--mute);margin:0 0 24px}
+dialog .row{display:flex;gap:10px}
+dialog .row .btn{flex:1;padding:14px 16px}
+.btn-line{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+
+@media(max-width:1080px){
+  .layout{grid-template-columns:1fr}
+  .side{display:none}
+  .mobile-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .mobile-bar .brand{color:var(--ink)}
+  .mobile-bar .mark{color:var(--night)}
+  .mobile-bar small{color:var(--mute);font-weight:600}
+}
+@media(max-width:640px){
+  main{padding:22px 14px 40px}
+  .card{padding:26px 18px;border-radius:22px}
+  .fg,.yn,.review dl{grid-template-columns:1fr}
+  .inline-yn .yn{grid-template-columns:1fr 1fr}
+  .actions{flex-direction:column-reverse;align-items:stretch}
+  .actions .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side">
+  <div class="top"><a class="brand" href="index.html"><span class="mark">C</span>Cardwise</a><a class="back" href="index.html">← Back to home</a></div>
+  <h1>Cardholder <span class="serif">enquiry.</span></h1>
+  <p>Open only to primary holders of an active credit card. About 3 minutes.</p>
+  <div class="pv" id="pv" aria-hidden="true">
+    <div><span class="bk" id="pvBank">Your bank</span><span class="nt" id="pvNet">Network</span></div>
+    <span class="chip"></span>
+    <span class="num" id="pvNum">•••• •••• •••• ••••</span>
+    <div><span class="nm" id="pvName">Name on card</span><span class="vr" id="pvVar"></span></div>
+  </div>
+  <ol class="rail" id="rail">
+    <li class="cur"><i>1</i>Eligibility check</li>
+    <li><i>2</i>Your current card</li>
+    <li><i>3</i>About you</li>
+    <li><i>4</i>What you need</li>
+    <li><i>5</i>Review & submit</li>
+  </ol>
+  <div class="safe"><b>Never share sensitive details</b>We ask only for the last 4 digits. Never enter your full card number, expiry, CVV, PIN, OTP or passwords.</div>
+</aside>
+
+<main><div class="panel">
+  <div class="mobile-bar"><a class="brand" href="index.html"><span class="mark">C</span>Cardwise</a><small id="mStep">Step 1 of 5</small></div>
+  <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+  <form class="card" id="form" novalidate>
+    <!-- STEP 1: gate -->
+    <section class="step on" data-step="0">
+      <span class="kicker">Step 1 · Eligibility</span>
+      <h2>First, let's confirm your card.</h2>
+      <p class="sub">All three answers must be “Yes” to continue. If any answer is “No”, the enquiry closes.</p>
+      <fieldset class="q"><legend><span>1</span>Do you currently hold a credit card from any bank?</legend>
+        <div class="yn"><label class="opt"><input type="radio" name="g1" value="yes"><i class="dot"></i><div><b>Yes, I do</b><small>Any Indian bank or issuer</small></div></label>
+        <label class="opt no"><input type="radio" name="g1" value="no"><i class="dot"></i><div><b>No, I don't</b><small>I only have a debit card or none</small></div></label></div></fieldset>
+      <fieldset class="q"><legend><span>2</span>Is the card issued in your own name as the primary holder?</legend>
+        <div class="yn"><label class="opt"><input type="radio" name="g2" value="yes"><i class="dot"></i><div><b>Yes, primary holder</b><small>The account is in my name</small></div></label>
+        <label class="opt no"><input type="radio" name="g2" value="no"><i class="dot"></i><div><b>No</b><small>It's an add-on or someone else's card</small></div></label></div></fieldset>
+      <fieldset class="q"><legend><span>3</span>Is the card active right now (not closed, blocked or cancelled)?</legend>
+        <div class="yn"><label class="opt"><input type="radio" name="g3" value="yes"><i class="dot"></i><div><b>Yes, it's active</b><small>I can use it for payments</small></div></label>
+        <label class="opt no"><input type="radio" name="g3" value="no"><i class="dot"></i><div><b>No</b><small>Closed, blocked or cancelled</small></div></label></div></fieldset>
+    </section>
+
+    <!-- STEP 2: card -->
+    <section class="step" data-step="1">
+      <span class="kicker">Step 2 · Your current card</span>
+      <h2>Tell us about your card.</h2>
+      <p class="sub">Pick your bank and the card list updates automatically.</p>
+      <div class="fg">
+        <label class="f full">Issuing bank<select id="bank" name="bank"></select><span class="hint">Includes public, private, small finance and foreign banks, plus major card issuers in India.</span><span class="em">Select the bank that issued your card.</span></label>
+        <label class="f full">Card variant <span class="count" id="vCount"></span><select id="variant" name="variant" disabled><option value="">Select bank first</option></select><span class="hint">Choose the card name printed on your card. If it's not listed, pick the “Other” option.</span><span class="em">Select your card variant.</span></label>
+        <label class="f">Card network<select id="net" name="net"><option value="">Select network</option><option>Visa</option><option>Mastercard</option><option>RuPay</option><option>American Express</option><option>Diners Club</option><option>Not sure</option></select><span class="hint">Printed on the front or back of the card.</span><span class="em">Select the network.</span></label>
+        <label class="f">Last 4 digits of the card<input id="last4" name="last4" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="e.g. 4821"><span class="hint">Only the last four. Never your full number.</span><span class="em">Enter exactly 4 digits.</span></label>
+        <label class="f full">Name printed on the card<input id="cname" name="cname" autocomplete="cc-name" placeholder="As shown on your card"><span class="hint">Must match the full name you enter in the next step.</span><span class="em">Enter the name on your card.</span></label>
+        <label class="f">Card held since<select id="since" name="since"><option value="">Select</option><option>Less than 6 months</option><option>6–12 months</option><option>1–3 years</option><option>3–5 years</option><option>More than 5 years</option></select><span class="em">Select one.</span></label>
+        <label class="f">Approx. credit limit<select name="limit"><option value="">Select</option><option>Below ₹50,000</option><option>₹50,000–₹1,50,000</option><option>₹1,50,000–₹3,00,000</option><option>₹3,00,000–₹5,00,000</option><option>Above ₹5,00,000</option></select><span class="em">Select one.</span></label>
+        <p class="warn" id="sinceWarn">Banks usually look for a card held for at least 6 months with a good repayment record. You can still enquire; your advisor will check what's possible.</p>
+        <fieldset class="q inline-yn"><legend>Any missed or late payment on this card in the last 12 months?</legend>
+          <div class="yn"><label class="opt"><input type="radio" name="late" value="No"><i class="dot"></i><div><b>No</b></div></label>
+          <label class="opt"><input type="radio" name="late" value="Yes"><i class="dot"></i><div><b>Yes</b></div></label></div></fieldset>
+        <p class="warn" id="lateWarn">Late payments can affect a bank's decision. We'll still guide you, but approval may be harder.</p>
+      </div>
+    </section>
+
+    <!-- STEP 3: about you -->
+    <section class="step" data-step="2">
+      <span class="kicker">Step 3 · About you</span>
+      <h2>How can an advisor reach you?</h2>
+      <p class="sub">Used only to contact you about this enquiry.</p>
+      <div class="fg">
+        <label class="f full">Full name<input id="fname" name="fname" autocomplete="name" placeholder="Same as on your card"><span class="em" id="fnameErr">Enter your full name.</span></label>
+        <label class="f">Mobile number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="98765 43210"><span class="em">Enter a valid 10-digit Indian mobile number.</span></label>
+        <label class="f">Email<input name="email" type="email" autocomplete="email" placeholder="you@example.com"><span class="em">Enter a valid email address.</span></label>
+        <label class="f">Age<select id="age" name="age"><option value="">Select</option><option>18–20</option><option>21–25</option><option>26–35</option><option>36–45</option><option>46–60</option><option>Above 60</option></select><span class="em">Select your age group.</span></label>
+        <label class="f">City<input name="city" autocomplete="address-level2" placeholder="Your city"><span class="em">Enter your city.</span></label>
+        <label class="f">PIN code<input name="pin" inputmode="numeric" maxlength="6" autocomplete="postal-code" placeholder="6 digits"><span class="em">Enter a valid 6-digit PIN code.</span></label>
+        <label class="f">Employment<select name="emp"><option value="">Select</option><option>Salaried</option><option>Self-employed professional</option><option>Business owner</option><option>Retired</option><option>Other</option></select><span class="em">Select one.</span></label>
+        <label class="f full">Monthly income<select name="inc"><option value="">Select</option><option>Below ₹25,000</option><option>₹25,000–₹50,000</option><option>₹50,001–₹1,00,000</option><option>₹1,00,001–₹2,00,000</option><option>Above ₹2,00,000</option></select><span class="em">Select one.</span></label>
+        <p class="warn" id="ageWarn">Most card issuers need the primary applicant to be at least 21. Your advisor will confirm ICICI Bank's current criteria.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4: needs -->
+    <section class="step" data-step="3">
+      <span class="kicker">Step 4 · What you need</span>
+      <h2>What should your next card do?</h2>
+      <p class="sub">This helps your advisor prepare the right comparison.</p>
+      <div class="fg">
+        <label class="f">Interested in<select id="want" name="want"><option value="">Select</option><option value="rubyx">ICICI Bank Rubyx</option><option value="coral">ICICI Bank Coral</option><option value="rupay">A RuPay variant (UPI)</option><option value="upgrade">Upgrade my current card</option><option value="unsure">Not sure, need guidance</option></select><span class="em">Select one.</span></label>
+        <label class="f">Expected monthly card spend<select name="spend"><option value="">Select</option><option>Below ₹10,000</option><option>₹10,000–₹25,000</option><option>₹25,000–₹50,000</option><option>₹50,000–₹1,00,000</option><option>Above ₹1,00,000</option></select><span class="em">Select one.</span></label>
+        <div class="f full" id="benefits">Benefits that matter to you <span style="font-weight:500;color:var(--mute)">(pick any)</span>
+          <div class="chips">
+            <label><input type="checkbox" value="Lounge access"><span>Lounge access</span></label>
+            <label><input type="checkbox" value="Reward points"><span>Reward points</span></label>
+            <label><input type="checkbox" value="Cashback"><span>Cashback</span></label>
+            <label><input type="checkbox" value="Movies & dining"><span>Movies & dining</span></label>
+            <label><input type="checkbox" value="Fuel savings"><span>Fuel savings</span></label>
+            <label><input type="checkbox" value="Travel & forex"><span>Travel & forex</span></label>
+            <label><input type="checkbox" value="UPI on credit card"><span>UPI on credit card</span></label>
+            <label><input type="checkbox" value="Low annual fee"><span>Low annual fee</span></label>
+          </div>
+        </div>
+        <label class="f">Preferred language<select name="lang"><option value="">Select</option><option>Hindi</option><option>English</option><option>Hinglish</option><option>Tamil</option><option>Telugu</option><option>Kannada</option><option>Malayalam</option><option>Marathi</option><option>Bengali</option><option>Gujarati</option></select><span class="em">Select one.</span></label>
+        <label class="f">Best time to call<select name="when"><option value="">Select</option><option>Morning (9–12)</option><option>Afternoon (12–4)</option><option>Evening (4–8)</option></select><span class="em">Select one.</span></label>
+      </div>
+    </section>
+
+    <!-- STEP 5: review -->
+    <section class="step" data-step="4">
+      <span class="kicker">Step 5 · Review</span>
+      <h2>Check everything once.</h2>
+      <p class="sub">Edit any section before you submit.</p>
+      <div id="review"></div>
+      <label class="chk"><input type="checkbox" id="own"><span>I confirm this credit card is issued in my own name and I am its primary holder, not an add-on holder.</span></label>
+      <label class="chk"><input type="checkbox" id="consent"><span>I agree to be contacted about this enquiry. I understand this is not a bank application or an approval guarantee.</span></label>
+      <p class="demo">Your details are sent securely and used only to contact you about this enquiry. We never ask for your full card number, CVV, PIN or OTP.</p>
+      <label aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+    </section>
+
+    <div class="actions" id="actions">
+      <button type="button" class="btn btn-ghost" id="prev" style="visibility:hidden">← Back</button>
+      <button type="button" class="btn btn-main" id="next" disabled>Continue →</button>
+    </div>
+    <p class="fm" id="fm" role="alert"></p>
+
+    <!-- states -->
+    <div class="state ok" id="done">
+      <div class="ic">✓</div><h2>Enquiry received</h2>
+      <p>Thank you. An advisor will call you at your preferred time to talk through your options.</p>
+      <span class="ref" id="ref"></span>
+      <ul><li>Keep your current card statement handy for the call</li><li>Our advisor will never ask for your CVV, PIN or OTP</li><li>You'll apply only on ICICI Bank's official channel</li></ul>
+      <a class="btn btn-main" href="index.html">Back to home</a>    </div>
+    <div class="state lock" id="locked">
+      <div class="ic">🔒</div><h2>You're not eligible for this enquiry</h2>
+      <p>This enquiry is only for people who currently hold an active credit card in their own name as the primary cardholder. The form will stay closed for this session.</p>
+      <a class="btn btn-main" href="index.html" style="margin-top:12px">Back to home</a>
+    </div>
+  </form>
+</div></main>
+</div>
+
+<dialog id="confirmNo" aria-labelledby="cnT">
+  <div class="ic">!</div><h3 id="cnT">Close the enquiry?</h3>
+  <p>This enquiry is only for primary holders of an active credit card. If you confirm “No”, the form will close for this session.</p>
+  <div class="row"><button type="button" class="btn btn-line" id="cnBack">Change my answer</button><button type="button" class="btn btn-main" id="cnOk">Yes, close it</button></div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/apply.js"></script>
+</body>
+</html>
