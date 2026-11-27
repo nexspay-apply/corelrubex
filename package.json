@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@netlify/server": "^0.1.6",
     "@supabase/supabase-js": "2.45.4",
     "jspdf": "2.5.2",
     "jspdf-autotable": "3.8.4",

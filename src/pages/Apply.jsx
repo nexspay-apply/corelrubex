@@ -124,8 +124,48 @@ export default function Apply() {
     utm_source: params.get('utm_source'), utm_campaign: params.get('utm_campaign')
   });
 
+  // Everything filled in up to (and including) step `upto`, as DB columns.
+  // Sent on every Continue so the same row always holds the latest data for all steps so far.
+  const payload = upto => {
+    const p = {
+      full_name: v.fname.trim(), mobile: mob(v.phone),
+      utm_source: params.get('utm_source') || '', utm_campaign: params.get('utm_campaign') || '',
+      device: meta.device || '', user_agent: meta.user_agent || ''
+    };
+    if (upto >= 1) Object.assign(p, {
+      bank: v.bank, card_variant: v.variant, card_network: v.net, card_last4: v.last4,
+      name_on_card: v.cname.trim(), card_held_since: v.since, credit_limit: v.limit, late_payment_12m: v.late === 'Yes',
+      email: v.email.trim().toLowerCase(), age_group: v.age, city: v.city.trim(), pin_code: v.pin,
+      employment: v.emp, monthly_income: v.inc
+    });
+    if (upto >= 2) Object.assign(p, { interested_in: v.want, monthly_spend: v.spend, benefits, language: v.lang, call_time: v.when });
+    if (upto >= 3) Object.assign(p, { confirm_primary_holder: own, consent_contact: consent });
+    return p;
+  };
+
+  // Save step data to the server (/api/lead). Step 1 creates the row, later steps update the same row.
+  async function saveStep(upto, final = false) {
+    try {
+      const res = await fetch('/api/lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: lead?.ref, final, website: v.website, data: payload(upto) })
+      });
+      const j = await res.json().catch(() => ({}));
+      if (j.ok && j.ref) {
+        if (j.ref !== lead?.ref) { setLead({ ref: j.ref }); if (!final) writeLead({ ref: j.ref }); }
+        return { ok: true, ref: j.ref };
+      }
+      return { ok: false, error: j.error || 'http_' + res.status };
+    } catch { return { ok: false, error: 'network' }; }
+  }
+  const TOO_MANY = 'You have already submitted applications from this mobile number today. Our advisor will contact you soon.';
+
   // step 1 → real-time DB save: creates lead row instantly
   async function ensureLead() {
+    const sv = await saveStep(0);
+    if (sv.ok) { setSavedNote('Saved — your details are stored securely.'); return true; }
+    if (sv.error === 'too_many') { setFm(TOO_MANY); return false; }
+    // Server unavailable → fall back to saving directly from the browser
     if (!configured) return true;
     if (lead) return true;
     const r = makeRef();
@@ -134,9 +174,12 @@ export default function Apply() {
     });
     if (error) {
       console.error(error);
-      if (/too many enquiries/i.test(error.message || '')) setFm('You have already submitted applications from this mobile number today. Our advisor will contact you soon.');
-      else setFm('Could not save your progress yet — it will be saved when you submit.');
-      return false;
+      if (/too many enquiries/i.test(error.message || '')) {
+        setFm('You have already submitted applications from this mobile number today. Our advisor will contact you soon.');
+        return false;
+      }
+      // Auto-save is a convenience only: never block the applicant. Everything is saved on final submit.
+      return true;
     }
     setLead({ ref: r }); writeLead({ ref: r });
     setSavedNote('Saved — your details are stored securely.');
@@ -145,6 +188,8 @@ export default function Apply() {
 
   // step 2 → real-time DB save: card + about merged
   async function saveCardAbout() {
+    const sv = await saveStep(1);
+    if (sv.ok) { setSavedNote('Card & personal details saved automatically.'); return; }
     if (!configured || !lead) return;
     const part = {
       bank: v.bank, card_variant: v.variant, card_network: v.net, card_last4: v.last4,
@@ -160,6 +205,8 @@ export default function Apply() {
 
   // step 3 → real-time DB save: needs
   async function saveNeeds() {
+    const sv = await saveStep(2);
+    if (sv.ok) { setSavedNote('Your preferences saved automatically.'); return; }
     if (!configured || !lead) return;
     const part = { interested_in: v.want, monthly_spend: v.spend, benefits, language: v.lang, call_time: v.when };
     try {
@@ -231,8 +278,17 @@ export default function Apply() {
     }
     if (!own || !consent || !legal) { setFm('Please tick all three confirmations to submit.'); return; }
     if (v.website) return;
-    if (!configured) { setFm('The form is not connected to the database yet. Add your Supabase keys (see README).'); return; }
     setSending(true);
+    const sv = await saveStep(3, true);
+    if (sv.ok) {
+      setSending(false);
+      setRef(sv.ref); writeLead({ ref: sv.ref }, true);
+      nav(`/thank-you?ref=${sv.ref}&name=${encodeURIComponent(v.fname.trim())}`, { replace: true });
+      return;
+    }
+    if (sv.error === 'too_many') { setSending(false); setFm(TOO_MANY); return; }
+    // Server unavailable → fall back to saving directly from the browser
+    if (!configured) { setSending(false); setFm('The form is not connected to the database yet. Add your Supabase keys (see README).'); return; }
     const full = {
       bank: v.bank, card_variant: v.variant, card_network: v.net, card_last4: v.last4,
       name_on_card: v.cname.trim(), card_held_since: v.since, credit_limit: v.limit, late_payment_12m: v.late === 'Yes',
@@ -242,11 +298,22 @@ export default function Apply() {
       confirm_primary_holder: own, consent_contact: consent, status: 'new', ...ctx()
     };
     let error = null, r = lead?.ref || makeRef();
-    if (lead) {
-      ({ error } = await publicClient.from(TABLE).update(full).eq('ref', r));
-    } else {
-      ({ error } = await publicClient.from(TABLE).insert({ ref: r, ...full }));
-    }
+    try {
+      if (lead) {
+        ({ error } = await publicClient.from(TABLE).update(full).eq('ref', r));
+      } else {
+        ({ error } = await publicClient.from(TABLE).insert({ ref: r, ...full }));
+      }
+      // Fallback: if the in-progress row could not be updated, or the database is still on the
+      // original permissions (no status/IP/device columns for the website), insert a complete
+      // row using only the original columns so the application is never lost.
+      if (error && (error.code === '42501' || /permission denied|row-level security/i.test(error.message || ''))) {
+        console.error('primary save failed, retrying with basic columns', error);
+        const { status, ip, geo_country, device, user_agent, ...basic } = full;
+        r = makeRef();
+        ({ error } = await publicClient.from(TABLE).insert({ ref: r, ...basic }));
+      }
+    } catch (e) { error = e; }
     setSending(false);
     if (error) {
       console.error(error);

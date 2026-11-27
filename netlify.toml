@@ -3,10 +3,32 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "24"
 
-# SPA routing: /apply, /admin etc. all load index.html
+# Step-by-step application saving lives in netlify/server/index.mjs (/api/*).
+
+# SPA routing: app pages load index.html. Scoped to frontend paths so /api/* reaches the server.
 [[redirects]]
-  from = "/*"
+  from = "/apply"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/thank-you"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
   to = "/index.html"
   status = 200
