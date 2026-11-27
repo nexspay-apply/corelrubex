@@ -35,6 +35,9 @@ npm run dev                 # http://localhost:5173
      `SELECT` to `anon` **without exposing data** (RLS stays on, no select policy exists, so
      anon still sees zero rows).
    - Already ran 001–004 earlier? Then run only `005_grant_select.sql`.
+   - Apply form shows *"Could not save your progress yet"* on step 1? The live database has
+     lost the website permissions (e.g. `001_schema.sql` was re-run). Run
+     **`006_repair_permissions.sql`** — it is safe to run any time and re-applies 003–005.
 2. Authentication → Users → Add user: `admin@cardwise.local` + strong password, with **Auto Confirm User** ticked.
 3. Run the `insert into public.admins …` line from the bottom of `002_admin.sql`.
 4. Turn OFF "Allow new users to sign up".
